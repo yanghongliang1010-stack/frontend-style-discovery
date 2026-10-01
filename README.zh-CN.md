@@ -82,3 +82,5 @@ npm run demo
 安装 Chromium 后运行 `npm run check`。查看[实际验证与限制](docs/VALIDATION.md)、[行为评估用例](docs/EVALUATION.md)和[贡献方法](CONTRIBUTING.md)。脚本演练不是独立代理评估或真实用户研究，构建成功也不代表后端/生产验证完成。
 
 原创代码和示例采用 MIT；参考网站作品保留作者权利，详情见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
+视频回归使用本机已安装的 Google Chrome（或 CHROMIUM_PATH 指定的兼容浏览器）；Playwright 自带 Chromium 可能缺少 H.264/AAC 解码。图库回归仍使用 Chromium，CI 只在一次性运行环境安装 Chrome。

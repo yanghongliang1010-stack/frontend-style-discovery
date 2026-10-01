@@ -84,3 +84,5 @@ The film uses original procedural 3D, camera movement and audio. The native page
 Run `npx playwright install chromium` and `npm run check` for tool/browser regressions. Read [validation evidence](docs/VALIDATION.md), [behavioral evaluation criteria](docs/EVALUATION.md), and [contributing](CONTRIBUTING.md). A scripted synthetic rehearsal is not independent agent or real-user validation; concept images are not production implementations.
 
 MIT for original code/assets. Reference-site artwork remains its creators' property; see [third-party notices](THIRD_PARTY_NOTICES.md).
+
+Media playback checks use installed Google Chrome (or CHROMIUM_PATH), because bundled Chromium may lack H.264/AAC codecs. Gallery checks use bundled Chromium. CI installs Chrome only in its disposable runner.

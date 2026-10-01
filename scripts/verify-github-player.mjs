@@ -10,7 +10,7 @@ const browser = await chromium.launch({
   headless: true,
   ...(process.env.CHROMIUM_PATH
     ? { executablePath: process.env.CHROMIUM_PATH }
-    : {}),
+    : { channel: "chrome" }),
 });
 try {
   const page = await browser.newPage({
@@ -33,20 +33,34 @@ try {
     }
   }
   const result = await video.evaluate(async (v) => {
-    if (v.readyState < 1)
-      await new Promise((resolve, reject) => {
-        v.addEventListener("loadedmetadata", resolve, { once: true });
-        v.addEventListener(
-          "error",
-          () => reject(new Error("GitHub video failed to load")),
-          { once: true },
-        );
+    const waitEvent = (event, trigger) =>
+      new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error(`GitHub video ${event} timed out`));
+        }, 30000);
+        const done = () => {
+          cleanup();
+          resolve();
+        };
+        const fail = () => {
+          cleanup();
+          reject(new Error(`GitHub video error ${v.error?.code || 0}`));
+        };
+        const cleanup = () => {
+          clearTimeout(timer);
+          v.removeEventListener(event, done);
+          v.removeEventListener("error", fail);
+        };
+        v.addEventListener(event, done);
+        v.addEventListener("error", fail);
+        if (v.error) fail();
+        else trigger?.();
       });
-    const seek = new Promise((resolve) =>
-      v.addEventListener("seeked", resolve, { once: true }),
-    );
-    v.currentTime = 19;
-    await seek;
+    if (v.readyState < 1) await waitEvent("loadedmetadata");
+    await waitEvent("seeked", () => {
+      v.currentTime = 19;
+    });
     v.muted = true;
     await v.play();
     return {

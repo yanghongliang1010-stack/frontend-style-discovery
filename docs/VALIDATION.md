@@ -32,3 +32,5 @@ The 16-item library contains original source links, not third-party images. On 2
 The two COMMONPLACE concepts were generated with built-in imagegen and viewed. They are not code-native interfaces or complete meshes. The WebGL film is an independently coded sculpture, not a claim of pixel-perfect concept implementation.
 
 The raw-request scenarios and scoring criteria in EVALUATION.md are an evaluation protocol. No independent-agent or real-user study has been completed. The synthetic walkthrough tests data continuity and usable tool commands. Future claims of agent/user success must include actual recorded outputs and consented evidence.
+
+Video playback checks use installed Google Chrome or CHROMIUM_PATH; bundled Chromium may omit H.264/AAC codecs. CI installs Chrome in its disposable runner, and media waits have explicit timeouts. See [Playwright media codec guidance](https://playwright.dev/docs/browsers#media-codecs).

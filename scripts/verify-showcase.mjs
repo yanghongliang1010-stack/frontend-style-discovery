@@ -7,7 +7,7 @@ const browser = await chromium.launch({
   headless: true,
   ...(process.env.CHROMIUM_PATH
     ? { executablePath: process.env.CHROMIUM_PATH }
-    : {}),
+    : { channel: "chrome" }),
   args: ["--disable-gpu", "--enable-unsafe-swiftshader"],
 });
 const checks = [],
@@ -39,16 +39,43 @@ try {
     (await page.locator("#film[open] video").count()) === 1,
   );
   const playback = await page.locator("video").evaluate(async (video) => {
-    if (video.readyState < 1)
-      await new Promise((resolve, reject) => {
-        video.addEventListener("loadedmetadata", resolve, { once: true });
-        video.addEventListener("error", reject, { once: true });
+    if (!video.canPlayType('video/mp4; codecs="avc1.640028, mp4a.40.2"'))
+      throw new Error(
+        "H.264/AAC playback requires an official Chrome binary; use CHROMIUM_PATH or installed Google Chrome.",
+      );
+    const waitEvent = (event, trigger) =>
+      new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(
+            new Error(
+              `Video ${event} timed out; readyState=${video.readyState}, error=${video.error?.code || 0}`,
+            ),
+          );
+        }, 15000);
+        const done = () => {
+          cleanup();
+          resolve();
+        };
+        const fail = () => {
+          cleanup();
+          reject(new Error(`Video error ${video.error?.code || 0}`));
+        };
+        const cleanup = () => {
+          clearTimeout(timer);
+          video.removeEventListener(event, done);
+          video.removeEventListener("error", fail);
+        };
+        video.addEventListener(event, done);
+        video.addEventListener("error", fail);
+        if (video.error) fail();
+        else trigger?.();
       });
+    if (video.readyState < 1) await waitEvent("loadedmetadata");
     const duration = video.duration;
-    video.currentTime = 28;
-    await new Promise((resolve) =>
-      video.addEventListener("seeked", resolve, { once: true }),
-    );
+    await waitEvent("seeked", () => {
+      video.currentTime = 28;
+    });
     video.muted = true;
     await video.play();
     return {
