@@ -1,25 +1,30 @@
 # 选图式前端设计 · Frontend Style Discovery
 
-**先看案例选风格，再把喜欢的部分组合成界面，最后进入开发。**
+**不会描述也没关系：先看案例，选喜欢的部分，多轮组合，再把定稿做成前端。**
 
-[English](README.md) · [完整操作流程](docs/WORKFLOW.zh-CN.md) · [宣传视频](media/frontend-style-discovery.mp4)
+[English](README.md) · [完整操作流程](docs/WORKFLOW.zh-CN.md) · [独立示例](docs/CASE_STUDY.zh-CN.md)
 
-![原创明亮暖色空间工作区](examples/media/concept-warm.png)
+https://github.com/user-attachments/assets/c3c84a07-ba15-4bec-a6af-64b6108e10b3
 
-很多人说不清想要什么设计，却能在具体页面中认出喜欢的部分。这个 skill 让 AI 先找真实案例、生成带编号的选图册，用户选出喜欢的页面并说明原因，再通过多轮搜索和组合逐渐收敛设计。
+![独立虚构示例 COMMONPLACE 灵感收藏工具](examples/media/commonplace-editorial.png)
 
-例如，先选中 KODE、Lusion、Igloo 的 3D 场景和材质，但不喜欢工作台布局；下一轮就寻找空间化应用界面。选定场景与浮窗后，再根据“更明亮、更强烈的暖色碰撞”调整灯光和材质。最后可以把认可的两版合并为可切换主题。
+这是一套可复用的 Codex skill。用户只需选几个编号、说说喜欢或不喜欢的部分，助手就能保留已选方向、继续寻找未确定的部分，组合出完整原创界面；获得开发授权后继续实现并验证。
 
-## 适合什么场景
+支持收藏工具、工作台、编辑器、仪表盘、移动端和品牌网站，不规定必须使用 3D、暖色或某种框架。
 
-- 不知道如何描述审美，希望直接看 10–20 个真实案例。
-- AI 已经做了几版，仍然不是自己想要的界面。
-- 喜欢多个作品中的不同部分，希望合理组合。
-- 先敲定视觉，再保留现有业务功能完成前端重做。
+## 包里有什么
 
-流程适用于各种前端；本仓库的 3D 空间工作区是示例，不会强迫所有项目使用玻璃、3D 或暖色。
+- 真实参考搜索、多轮选择、属性提炼、原创组合、反馈修订和开发交接流程。
+- 本地选图册：搜索、筛选、喜欢/不喜欢、理由、放大、对比、导入/导出。
+- 两个多轮工具：保留原始选择证据；自动固定喜欢的来源并延续编号。
+- 决策记录和交接模板：字体、间距、状态、交互、响应式、验收。
+- 16 个作者/产品来源入口、两张独立原创 COMMONPLACE 概念和 32 秒原创 WebGL 宣传片。
 
-## 安装与调用
+COMMONPLACE 是新制作的虚构“个人灵感收藏工具”，不包含使用者的私人项目。16 个入口是有核验标签的研究起点，不是假装已经浏览过的应用截图。概念图与实际联网产品分开说明。
+
+## 安装
+
+skill 和图库工具只需 Python 3.10+；Node 只用于宣传展示和浏览器检查。
 
 ```sh
 git clone https://github.com/yanghongliang1010-stack/frontend-style-discovery.git
@@ -27,53 +32,53 @@ cd frontend-style-discovery
 python3 scripts/install-local.py
 ```
 
-安装器只复制 skill 本体，默认放到 Codex 技能目录，遇到已有同名技能会停止。Python 3.10+ 即可。安装后下一轮对话可用。
+安装到 CODEX_HOME/skills，默认 ~/.codex/skills；已有同名技能时拒绝覆盖。技能发现未刷新时在下一轮/新会话使用。
+
+## 怎么用
 
 ```text
-用 $frontend-style-discovery 帮我重做前端。
-我描述不清想要的风格，先找 10–20 个真实界面让我选。
-先设计，选定以后再连接现有功能。
+$frontend-style-discovery
+我要重做一个收藏工具，但不知道想要的风格。
+先找 10–20 个差异明显的真实界面让我选，先设计，再连接功能。
 ```
 
-之后直接用编号和具体反馈推进：
+之后只回复编号也可以：
 
 ```text
-喜欢 13、17、18 的场景和材质，工作台里没有喜欢的。
+喜欢 3 的收藏阅读顺序，喜欢 10 的材质。
+不喜欢那些密集的工作台，下一轮给我看不同的收藏布局。
 ```
 
-```text
-选 21、22、27、28。保留空间布局，颜色再亮一些，暖色碰撞更鲜明。
-```
+助手会区分选的是布局、颜色、材质还是交互，不把某项喜欢当成整套定稿通过。看完整稿后再提出具体修订，明确“用这套开始做”后进入已授权的开发。
 
-```text
-先用这套。深色和暖色合并为一个，用户可以自行切换主题，然后开始开发。
-```
-
-## 选图页怎么用
+## 立即体验选图和多轮流程
 
 ```sh
 python3 skills/frontend-style-discovery/scripts/build_gallery.py examples/demo.json --output out/gallery
 python3 -m http.server 8780 --bind 127.0.0.1 --directory out/gallery
 ```
 
-打开 <http://127.0.0.1:8780/>，按编号选择喜欢／不喜欢，逐张填写理由，筛选方向、放大图片和并排比较。导出的 JSON 可交给 AI，下一轮也可以导入继续使用。选择和备注留在浏览器本地。
-
-示例只包含原创概念图。真实参考的作者链接见 `examples/selected-references.json`；工具不会自行下载、热链或发布作者图片。带本地预览的清单格式见[选图说明](skills/frontend-style-discovery/references/gallery-workflow.md)。
-
-## 看原创 3D 演示与视频
+打开 http://127.0.0.1:8780/ 。无需模型密钥或 Node，选择只存本机浏览器；换浏览器/下一轮前导出。导入同时检查项目和来源身份，数据错误时整体拒绝，不会只更新一半。
 
 ```sh
-npm ci
-npm run gallery
-npm run demo
+python3 skills/frontend-style-discovery/scripts/summarize_choices.py examples/reference-library.json examples/walkthrough/choices.json --output out/preferences.json
+python3 skills/frontend-style-discovery/scripts/advance_round.py examples/reference-library.json examples/walkthrough/additions.json --decisions examples/walkthrough/choices.json --output out/round-2
+python3 skills/frontend-style-discovery/scripts/build_gallery.py out/round-2/references.json --output out/round-2-gallery
 ```
 
-打开 <http://127.0.0.1:8782/demo/>，拖动旋转展亭、切换日光与暮色。视频讲述从选图到设计再到开发的流程，场景、镜头和声音均为原创；创作思路借鉴所选作品的 3D 材质和空间运镜。
+自动固定已喜欢来源、保留历史编号、搬运相对图片并另存原始理由。旧输出不会被覆盖。[完整流程](docs/WORKFLOW.zh-CN.md)解释各阶段的交付、反馈和开发方法；[交接模板](skills/frontend-style-discovery/references/handoff-template.md)可以直接复制到项目。
 
-视频可重新生成，步骤见[制作说明](docs/VIDEO.md)。skill 和选图工具不需要 Node；只有 3D 演示与视频脚本需要 Node 20+。
+## 宣传展示和验证
 
-## 文件和许可
+```sh
+npm ci --ignore-scripts
+npm run gallery
+npm run demo
+# 打开 http://127.0.0.1:8782/demo/
+```
 
-`skills/frontend-style-discovery/` 是安装包；`examples/` 是原创示例与来源；`demo/` 是真实 3D 演示；`scripts/` 是安装、预览和视频工具；`docs/` 是完整流程、案例与验证。
+真实程序化 3D 雕塑、原创运镜与声音；本地页面中的视频也能直接播放、暂停和拖动。[视频制作方法](docs/VIDEO.md)提供复现命令。
 
-仓库代码、文档和原创示例采用 MIT。参考作品的版权归作者，不附带第三方截图、模型、音乐或影片；[许可说明](THIRD_PARTY_NOTICES.md)列出使用范围。设计图和演示不代表业务系统已经接入，项目交付仍需实际实现与验证。
+安装 Chromium 后运行 `npm run check`。查看[实际验证与限制](docs/VALIDATION.md)、[行为评估用例](docs/EVALUATION.md)和[贡献方法](CONTRIBUTING.md)。脚本演练不是独立代理评估或真实用户研究，构建成功也不代表后端/生产验证完成。
+
+原创代码和示例采用 MIT；参考网站作品保留作者权利，详情见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

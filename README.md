@@ -1,26 +1,30 @@
 # Frontend Style Discovery
 
-**Choose references. Express preferences. Combine a direction. Build the selected frontend.**
+**Choose examples. Explain the parts you like. Turn those choices into an original frontend.**
 
-[中文说明](README.zh-CN.md) · [Full workflow](docs/WORKFLOW.zh-CN.md) · [Watch the 32-second film](media/frontend-style-discovery.mp4)
+[中文说明](README.zh-CN.md) · [Step-by-step workflow](docs/WORKFLOW.zh-CN.md) · [Independent example](docs/CASE_STUDY.zh-CN.md)
 
-![Original warm spatial design concept](examples/media/concept-warm.png)
+https://github.com/user-attachments/assets/c3c84a07-ba15-4bec-a6af-64b6108e10b3
 
-A Codex skill for people who know what they like when they see it, but cannot describe it in design vocabulary. Instead of repeatedly guessing a style, the agent curates real examples, gives them stable IDs, asks what appealed, and refines the unresolved parts over multiple rounds.
+![COMMONPLACE — original fictional inspiration-library concept](examples/media/commonplace-editorial.png)
 
-It can combine a scene from one reference, floating tools from another, and a user's color feedback into one original interface. Once the user selects the concept, the workflow continues into implementation and browser verification.
+A reusable Codex skill for people who know what they like when they see it but cannot describe it upfront. Start with 10–20 real UI references, keep numbered choices across rounds, separate layout from color/material/motion, and compose a complete original design. Continue through implementation when authorized.
+
+It works for collection apps, dense workspaces, editors, dashboards, mobile interfaces and brand sites. It does not prescribe 3D, warm colors or a particular component stack.
 
 ## What you get
 
-- A reusable skill with exploration, composition, revision and implementation stages.
-- A dependency-free Python gallery builder: local previews, source links, filters, likes/dislikes, notes, enlargement, comparison and JSON export/import.
-- A resumable decision record that preserves liked, rejected and unresolved properties.
-- Original light/dark spatial concepts and a real interactive Three.js scene.
-- A promotional video, original sound and deterministic rendering scripts.
+- A staged discovery workflow and feedback playbook, including rejection, partial approval and resuming work.
+- A local selection gallery: search, filter, favorites, reasons, preview, comparison and JSON export/import.
+- Python tools to summarize factual choices and assemble another round without reassigning IDs or losing liked references.
+- Decision and implementation-handoff templates covering states, responsive behavior and verification.
+- A 16-source research starter library, two original **fictional** COMMONPLACE concepts and a reproducible 32-second WebGL film.
 
-The skill is general purpose. The spatial workspace is an example, not a mandatory visual style.
+The source library contains links with verification labels, not sixteen inspected application screenshots. COMMONPLACE images are original visual concepts, not a connected app or a user's private project. See [the independent walkthrough](docs/CASE_STUDY.zh-CN.md).
 
-## Install the skill
+## Install and use
+
+Python 3.10+ is enough for the skill and gallery tools. Node is optional for the showcase.
 
 ```sh
 git clone https://github.com/yanghongliang1010-stack/frontend-style-discovery.git
@@ -28,60 +32,55 @@ cd frontend-style-discovery
 python3 scripts/install-local.py
 ```
 
-The installer copies only `skills/frontend-style-discovery` into `${CODEX_HOME:-~/.codex}/skills` and refuses to overwrite an existing installation. It needs Python 3.10+. The skill will be available on the next turn in Codex.
+The installer uses CODEX_HOME/skills (default ~/.codex/skills) and refuses to overwrite an existing skill. Start a new Codex turn/session if discovery has not refreshed.
 
-Invoke it:
-
-```text
-Use $frontend-style-discovery to redesign my app.
-I can't describe the style. Find 10–20 real interfaces for me to choose from.
-Design first; connect the existing functions after I select a concept.
-```
-
-Continue with concrete selections:
+Example request:
 
 ```text
-I like 13, 17 and 18 for their 3D scenes and materials.
-None of the dashboard layouts work for me.
+$frontend-style-discovery
+I want to redesign an inspiration library, but cannot describe the style.
+Find 10–20 different real references for me to choose. Design first.
 ```
+
+Then you can simply reply with IDs and optional reasons:
 
 ```text
-Keep this spatial layout, make it brighter with stronger warm color contrast.
-Use the dark and warm variants as switchable themes, then implement them.
+I like 3 for the collection layout and 10 for its materials.
+None of the dense workspaces fits. Show different collection structures.
 ```
 
-## Run the gallery without Node
+The skill records which parts were selected and which remain unresolved. Favorites do not automatically approve a final design or development.
+
+## Try the local gallery
 
 ```sh
 python3 skills/frontend-style-discovery/scripts/build_gallery.py examples/demo.json --output out/gallery
 python3 -m http.server 8780 --bind 127.0.0.1 --directory out/gallery
 ```
 
-Open <http://127.0.0.1:8780/>. The bundled concepts are original examples; creator references in `examples/selected-references.json` are link-only. Bring local authorized previews for your own research. Nothing is automatically scraped, uploaded or sent to a model.
+Open http://127.0.0.1:8780/ . No model key or Node install is needed. Previews are local files; choices and notes stay in your browser. Export before changing browser/origin. Imports verify project and reference identity; malformed data cannot partially update choices.
 
-## Run the 3D showcase
+## Reproduce the multi-round walkthrough
 
 ```sh
-npm ci
+python3 skills/frontend-style-discovery/scripts/summarize_choices.py examples/reference-library.json examples/walkthrough/choices.json --output out/preferences.json
+python3 skills/frontend-style-discovery/scripts/advance_round.py examples/reference-library.json examples/walkthrough/additions.json --decisions examples/walkthrough/choices.json --output out/round-2
+python3 skills/frontend-style-discovery/scripts/build_gallery.py out/round-2/references.json --output out/round-2-gallery
+```
+
+The new manifest pins liked references, reserves earlier IDs, relocates local previews and retains original decisions. Existing output directories are protected. For installed use, resolve these scripts relative to the installed SKILL.md, not your app's cwd.
+
+## Showcase, checks and limitations
+
+```sh
+npm ci --ignore-scripts
 npm run gallery
 npm run demo
+# open http://127.0.0.1:8782/demo/
 ```
 
-Open <http://127.0.0.1:8782/demo/>. Drag to rotate, switch lighting/material themes, or open the gallery. Node 20+ is needed only for the 3D demo/video, not for the skill or gallery.
+The film uses original procedural 3D, camera movement and audio. The native page player supports play/pause and seeking. It uses no footage or assets from linked creators. [Video reproduction](docs/VIDEO.md) includes exact commands and requirements.
 
-## Reproduce the film
+Run `npx playwright install chromium` and `npm run check` for tool/browser regressions. Read [validation evidence](docs/VALIDATION.md), [behavioral evaluation criteria](docs/EVALUATION.md), and [contributing](CONTRIBUTING.md). A scripted synthetic rehearsal is not independent agent or real-user validation; concept images are not production implementations.
 
-Install Chromium using `npx playwright install chromium` and provide an FFmpeg executable on your PATH or in `FFMPEG_PATH`:
-
-```sh
-python3 scripts/make-sound.py
-npm run video
-```
-
-The renderer produces a deterministic 32-second film at 1280×720, 24 fps, with original WebGL geometry and sound; software rendering captures at 8 fps and interpolates the output. `CHROMIUM_PATH` can select an existing Chromium executable. See [video notes](docs/VIDEO.md) for the storyboard and production details.
-
-## Boundaries and license
-
-The gallery makes selection easy; the agent still researches real sources and interprets feedback. Static concepts and the 3D showcase are not backend-connected applications. Actual frontend delivery requires implementation and verification in the user's project.
-
-MIT for this repository's code, documentation and original demo assets. Third-party references retain their creators' rights; their screenshots/footage are not bundled. See [licensing and credits](THIRD_PARTY_NOTICES.md).
+MIT for original code/assets. Reference-site artwork remains its creators' property; see [third-party notices](THIRD_PARTY_NOTICES.md).

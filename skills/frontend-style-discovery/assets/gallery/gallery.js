@@ -4,8 +4,19 @@ const storageKey = `frontend-style-discovery:${manifest.project_id}:v1`;
 let decisions = {};
 try {
   const stored = JSON.parse(localStorage.getItem(storageKey) || "{}");
-  if (stored && typeof stored === "object" && !Array.isArray(stored))
-    decisions = stored;
+  if (stored && typeof stored === "object" && !Array.isArray(stored)) {
+    for (const ref of manifest.references) {
+      const item = stored[ref.id];
+      if (
+        item &&
+        ["like", "skip", ""].includes(item.value) &&
+        typeof item.notes === "string" &&
+        item.title === ref.title &&
+        item.source_url === ref.source_url
+      )
+        decisions[ref.id] = { ...item, notes: item.notes.slice(0, 2000) };
+    }
+  }
 } catch {}
 let toastTimer;
 const element = (tag, text, className) => {
@@ -32,7 +43,10 @@ function save() {
 }
 function choice(id) {
   const item = decisions[id];
-  return item && typeof item === "object" ? item : { value: "", notes: "" };
+  const ref = manifest.references.find((item) => item.id === id);
+  return item && typeof item === "object"
+    ? item
+    : { value: "", notes: "", title: ref.title, source_url: ref.source_url };
 }
 function updateSummary() {
   const liked = manifest.references
@@ -229,21 +243,41 @@ $("#import").addEventListener("change", async (event) => {
     const data = JSON.parse(await file.text());
     if (data.schema_version !== 1 || !Array.isArray(data.choices))
       throw new Error("选择文件格式不正确");
+    if (data.project_id !== manifest.project_id)
+      throw new Error("这份选择属于另一个项目");
     let applied = 0;
     let unmatched = 0;
     const next = { ...decisions };
     const ids = new Set(manifest.references.map((item) => item.id));
+    const seen = new Set();
     for (const item of data.choices) {
-      if (!item || !ids.has(item.id)) {
+      if (
+        !item ||
+        !Number.isInteger(item.id) ||
+        item.id < 1 ||
+        seen.has(item.id)
+      )
+        throw new Error("参考编号无效或重复");
+      seen.add(item.id);
+      if (
+        !["like", "skip", ""].includes(item.value) ||
+        typeof item.notes !== "string" ||
+        item.notes.length > 2000
+      )
+        throw new Error("选择内容格式不正确");
+      if (!ids.has(item.id)) {
         unmatched++;
         continue;
       }
-      if (
-        !["like", "skip", ""].includes(item.value) ||
-        typeof item.notes !== "string"
-      )
-        throw new Error("选择内容格式不正确");
-      next[item.id] = { value: item.value, notes: item.notes.slice(0, 2000) };
+      const ref = manifest.references.find((ref) => ref.id === item.id);
+      if (ref.title !== item.title || ref.source_url !== item.source_url)
+        throw new Error(`参考 ${item.id} 已改变，先核对编号和来源`);
+      next[item.id] = {
+        value: item.value,
+        notes: item.notes,
+        title: ref.title,
+        source_url: ref.source_url,
+      };
       applied++;
     }
     decisions = next;

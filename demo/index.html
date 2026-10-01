@@ -21,7 +21,7 @@
       <a href="./">Frontend<br />Style Discovery</a>
       <div class="controls">
         <button id="theme">切换为日光</button><a href="gallery/">打开选图册</a
-        ><a href="../media/frontend-style-discovery.mp4">播放宣传片</a>
+        ><button id="open-film">播放宣传片</button>
       </div>
     </header>
     <main>
@@ -35,23 +35,29 @@
     </main>
     <div id="sources" hidden>
       <p>参考原作</p>
-      <div>13 <strong>KODE Immersive</strong></div>
-      <div>17 <strong>Lusion</strong></div>
-      <div>18 <strong>Igloo</strong></div>
+      <div>12 <strong>KODE Immersive</strong></div>
+      <div>10 <strong>Lusion</strong></div>
+      <div>11 <strong>Igloo</strong></div>
       <small>本片场景、镜头和声音为原创制作</small>
     </div>
     <div id="axes" hidden>
-      <span>3D 场景与材质</span><span>空间布局与浮窗</span
-      ><span>明亮暖色碰撞</span>
+      <span>3D 材质与光线</span><span>杂志排版与编辑器</span
+      ><span>颜色与快捷操作</span>
     </div>
     <div id="concepts" hidden>
       <figure>
-        <img src="../examples/media/concept-dark.png" alt="原创暮色概念" />
-        <figcaption>保留空间与材质</figcaption>
+        <img
+          src="../examples/media/commonplace-editorial.png"
+          alt="原创杂志式灵感库概念"
+        />
+        <figcaption>方向 A · 杂志式排版</figcaption>
       </figure>
       <figure>
-        <img src="../examples/media/concept-warm.png" alt="原创日光概念" />
-        <figcaption>根据反馈，改成明亮暖色</figcaption>
+        <img
+          src="../examples/media/commonplace-spatial.png"
+          alt="原创空间画布概念"
+        />
+        <figcaption>方向 B · 空间画布</figcaption>
       </figure>
     </div>
     <footer>
@@ -61,6 +67,15 @@
         >GitHub / frontend-style-discovery</a
       >
     </footer>
+    <dialog id="film">
+      <button id="close-film">关闭</button
+      ><video
+        controls
+        preload="metadata"
+        poster="../media/poster.png"
+        src="../media/frontend-style-discovery.mp4"
+      ></video>
+    </dialog>
     <script type="module" src="showcase.js"></script>
   </body>
 </html>

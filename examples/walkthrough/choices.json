@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "project_id": "commonplace-demo",
+  "round": 1,
+  "choices": [
+    {
+      "id": 3,
+      "title": "Are.na",
+      "source_url": "https://www.are.na/",
+      "value": "like",
+      "notes": "喜欢收藏的思路；排版还没有决定"
+    },
+    {
+      "id": 10,
+      "title": "Lusion",
+      "source_url": "https://lusion.co/",
+      "value": "like",
+      "notes": "喜欢材质表达，不要整个品牌站布局"
+    },
+    {
+      "id": 1,
+      "title": "Linear",
+      "source_url": "https://linear.app/",
+      "value": "skip",
+      "notes": "不想要任务列表式的密集工作台"
+    }
+  ]
+}

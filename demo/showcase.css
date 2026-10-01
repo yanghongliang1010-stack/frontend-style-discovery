@@ -8,7 +8,7 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: #1d2421;
+  background: #1e1728;
   color: #f4f0e6;
   height: 100vh;
   height: 100dvh;
@@ -206,7 +206,7 @@ footer {
 }
 body[data-theme="warm"] {
   color: #48261b;
-  background: #f4c7aa;
+  background: #f3d8c6;
 }
 body[data-theme="warm"] #description {
   color: #785140;
@@ -290,4 +290,20 @@ body.video-mode footer a {
   #concepts {
     display: none !important;
   }
+}
+
+#film {
+  width: min(1100px, 95vw);
+  background: #17131e;
+  border: 1px solid #776578;
+  border-radius: 18px;
+  color: white;
+}
+#film video {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+}
+#film::backdrop {
+  background: #110a1ccc;
 }

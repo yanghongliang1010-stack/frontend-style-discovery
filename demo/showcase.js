@@ -1,12 +1,12 @@
-import { createPavilion } from "./pavilion.js";
+import { createSculpture } from "./sculpture.js";
 const video = new URLSearchParams(location.search).has("video");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (video) document.body.classList.add("video-mode");
-const pavilion = createPavilion(document.querySelector("#scene"), {
+const sculpture = createSculpture(document.querySelector("#scene"), {
   theme: "dark",
   interactive: !video,
   reducedMotion,
-  pixelRatio: video ? 0.5 : undefined,
+  pixelRatio: video ? 1 : undefined,
 });
 let theme = "dark";
 document.querySelector("#theme").addEventListener("click", () => {
@@ -14,7 +14,7 @@ document.querySelector("#theme").addEventListener("click", () => {
   document.body.dataset.theme = theme;
   document.querySelector("#theme").textContent =
     theme === "dark" ? "切换为日光" : "切换为暮色";
-  pavilion.setTheme(theme);
+  sculpture.setTheme(theme);
 });
 const stages = [
   {
@@ -45,7 +45,7 @@ const stages = [
     start: 16,
     end: 24,
     title: "多轮反馈。<br>拼成你的界面。",
-    text: "保留已经喜欢的空间结构。<br>根据反馈，换成更明亮的暖色碰撞。",
+    text: "杂志式排版 × 3D 材质 × 快捷操作。<br>独立示例 COMMONPLACE：个人灵感收藏工具。",
     shot: "wide",
     region: "concepts",
   },
@@ -53,7 +53,7 @@ const stages = [
     start: 24,
     end: 32,
     title: "选定之后，<br>直接进入开发。",
-    text: "一个布局，日光与暮色两套主题。<br>开源 skill · 本地选图 · 可复用流程",
+    text: "从偏好记录，到规格、状态与响应式验收。<br>开源 skill · 本地选图 · 可复用流程",
     shot: "wide",
     region: null,
   },
@@ -77,8 +77,17 @@ window.renderFrame = (seconds) => {
     seconds < 24
       ? "$frontend-style-discovery"
       : "github.com/yanghongliang1010-stack/frontend-style-discovery";
-  pavilion.renderAt(seconds, stage.shot, warmth);
+  sculpture.renderAt(seconds, stage.shot, warmth);
 };
-window.showcase = { pavilion, stages };
+window.showcase = { sculpture, stages };
 window.showcaseReady = true;
-addEventListener("pagehide", () => pavilion.dispose(), { once: true });
+addEventListener("pagehide", () => sculpture.dispose(), { once: true });
+
+const film = document.querySelector("#film");
+document
+  .querySelector("#open-film")
+  .addEventListener("click", () => film.showModal());
+document
+  .querySelector("#close-film")
+  .addEventListener("click", () => film.close());
+film.addEventListener("close", () => film.querySelector("video").pause());

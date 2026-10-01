@@ -37,19 +37,19 @@ try {
         imgs.every((i) => i.complete && i.naturalWidth > 0),
       ),
   );
-  await page.getByRole("button", { name: "喜欢 29", exact: true }).click();
+  await page.getByRole("button", { name: "喜欢 17", exact: true }).click();
   check(
     "Choice retains keyboard focus",
     await page.evaluate(
-      () => document.activeElement?.getAttribute("aria-label") === "喜欢 29",
+      () => document.activeElement?.getAttribute("aria-label") === "喜欢 17",
     ),
   );
   await page
-    .getByRole("textbox", { name: "29 选择理由" })
+    .getByRole("textbox", { name: "17 选择理由" })
     .fill("喜欢玻璃材质；布局继续找");
-  await page.getByRole("button", { name: "喜欢 30", exact: true }).click();
-  await page.getByRole("textbox", { name: "30 选择理由" }).fill("喜欢明亮暖色");
-  await page.locator("#search").fill("29");
+  await page.getByRole("button", { name: "喜欢 18", exact: true }).click();
+  await page.getByRole("textbox", { name: "18 选择理由" }).fill("喜欢明亮暖色");
+  await page.locator("#search").fill("17");
   check(
     "Search narrows references",
     (await page.locator(".card").count()) === 1,
@@ -85,14 +85,14 @@ try {
   check(
     "Export preserves stable IDs and reasons",
     data.choices.length === 2 &&
-      data.choices[0].id === 29 &&
+      data.choices[0].id === 17 &&
       data.choices[0].notes.includes("玻璃"),
   );
   await page.reload();
   check(
     "Refresh restores choices and notes",
     (
-      await page.getByRole("textbox", { name: "29 选择理由" }).inputValue()
+      await page.getByRole("textbox", { name: "17 选择理由" }).inputValue()
     ).includes("玻璃"),
   );
   const context2 = await browser.newContext({
@@ -114,14 +114,15 @@ try {
   check(
     "Export imports into a fresh browser context",
     (await imported
-      .getByRole("button", { name: "喜欢 29", exact: true })
+      .getByRole("button", { name: "喜欢 17", exact: true })
       .getAttribute("aria-pressed")) === "true",
   );
   await upload({
     schema_version: 1,
+    project_id: data.project_id,
     choices: [
-      { id: 29, value: "skip", notes: "should not commit" },
-      { id: 30, value: "INVALID", notes: "" },
+      { ...data.choices[0], id: 17, value: "skip", notes: "should not commit" },
+      { ...data.choices[1], id: 18, value: "INVALID", notes: "" },
     ],
   });
   await imported.waitForFunction(() =>
@@ -130,14 +131,46 @@ try {
   check(
     "Malformed import is rejected atomically",
     (await imported
-      .getByRole("button", { name: "喜欢 29", exact: true })
+      .getByRole("button", { name: "喜欢 17", exact: true })
       .getAttribute("aria-pressed")) === "true",
   );
+  for (const [name, bad] of [
+    [
+      "Cross-project import is rejected",
+      { ...data, project_id: "another-project" },
+    ],
+    [
+      "Reassigned reference ID is rejected",
+      {
+        ...data,
+        choices: [
+          { ...data.choices[0], source_url: "https://example.com/different" },
+        ],
+      },
+    ],
+    [
+      "Duplicate choice IDs are rejected",
+      { ...data, choices: [data.choices[0], data.choices[0]] },
+    ],
+  ]) {
+    await upload(bad);
+    await imported.waitForFunction(() =>
+      document.querySelector("#toast").textContent.includes("导入失败"),
+    );
+    check(
+      name,
+      (await imported
+        .getByRole("button", { name: "喜欢 17", exact: true })
+        .getAttribute("aria-pressed")) === "true",
+    );
+  }
   await upload({
     schema_version: 1,
+    project_id: data.project_id,
     choices: [
       {
-        id: 29,
+        ...data.choices[0],
+        id: 17,
         value: "like",
         notes: '<img src=x onerror="window.pwned=true">',
       },
@@ -178,7 +211,7 @@ try {
   });
   await imported.locator("#liked-only").check();
   await imported
-    .getByRole("button", { name: "不喜欢 29", exact: true })
+    .getByRole("button", { name: "不喜欢 17", exact: true })
     .click();
   check(
     "Filtered-out choice moves focus to filter",

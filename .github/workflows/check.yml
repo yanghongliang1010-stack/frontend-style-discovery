@@ -19,5 +19,7 @@ jobs:
       - run: npm run gallery
       - run: npx playwright install --with-deps chromium
       - run: node scripts/verify-gallery.mjs
-      - run: node --check demo/pavilion.js && node --check demo/showcase.js && node --check scripts/render-video.mjs && node --check skills/frontend-style-discovery/assets/gallery/gallery.js
-      - run: npx prettier --check README.md README.zh-CN.md docs skills demo scripts/*.mjs examples/*.json package.json .github/workflows/check.yml
+      - run: node scripts/verify-showcase.mjs
+      - run: node scripts/verify-round-trip.mjs
+      - run: node --check demo/sculpture.js && node --check demo/showcase.js && node --check scripts/render-video.mjs && node --check skills/frontend-style-discovery/assets/gallery/gallery.js
+      - run: npx prettier --check README.md README.zh-CN.md CONTRIBUTING.md docs skills demo scripts/*.mjs examples/*.json package.json .github/workflows/check.yml

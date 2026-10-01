@@ -19,6 +19,11 @@ def build(manifest_path: Path, output: Path) -> dict:
         raise ValueError('Expected a schema_version: 1 manifest object')
     if not isinstance(data.get('project_id'), str) or not data['project_id'].strip():
         raise ValueError('project_id is required')
+    if type(data.get('round', 1)) is not int or data.get('round', 1) < 1:
+        raise ValueError('round must be a positive integer')
+    reserved = data.get('reserved_ids', [])
+    if not isinstance(reserved, list) or any(type(i) is not int or i < 1 for i in reserved):
+        raise ValueError('reserved_ids must contain positive integer IDs')
     refs = data.get('references')
     if not isinstance(refs, list) or not 1 <= len(refs) <= 200:
         raise ValueError('references must contain 1–200 records')
@@ -66,7 +71,7 @@ def build(manifest_path: Path, output: Path) -> dict:
         'schema_version': 1, 'project_id': data['project_id'],
         'title': str(data.get('title', '前端参考选图册')),
         'subtitle': str(data.get('subtitle', '选择参考，记录你喜欢的部分。')),
-        'round': data.get('round', 1), 'references': validated,
+        'round': data.get('round', 1), 'reserved_ids': sorted(set(reserved) | ids), 'references': validated,
     }
     output = output.resolve()
     if output == root or output in manifest_path.parents:

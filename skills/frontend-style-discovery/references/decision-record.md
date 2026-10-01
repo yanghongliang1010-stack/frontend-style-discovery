@@ -1,52 +1,53 @@
 # Decision record
 
-Keep a brief, reference manifest, variants, feedback and verification in the project's design directory. Preserve these distinctions; adapt filenames to existing conventions.
+Keep a short editable record next to the manifests and artifacts. Scripts export evidence; the agent and user determine its meaning.
 
 ```json
 {
-  "stage": "build",
+  "project_id": "commonplace-demo",
+  "stage": "compose",
   "brief": {
-    "product": "AI knowledge workspace",
-    "scope": "design first, integrate later"
+    "product": "Fictional inspiration library",
+    "task": "Save and revisit ideas",
+    "scope": "Concept first"
   },
   "rounds": [
     {
       "round": 1,
-      "selected_ids": [13, 17, 18],
-      "feedback": "Likes 3D scenes/materials; rejects dashboard layouts",
-      "next_search": "spatial workspaces"
-    },
-    {
-      "round": 2,
-      "selected_ids": [21, 22, 27, 28],
-      "feedback": "Scene-centered tools with floating windows"
+      "manifest": "round-1/references.json",
+      "selected_ids": [3, 10],
+      "rejected_ids": [1],
+      "feedback": "Readable collection layout plus tactile 3D; not an issue tracker",
+      "next_search": "collection and canvas layouts"
     }
   ],
+  "preferences": {
+    "layout": {
+      "keep": ["clear collection reading order"],
+      "reject": ["issue-tracker density"],
+      "unresolved": ["masonry or canvas"]
+    },
+    "material": { "keep": ["tactile glass"], "evidence_ids": [10] }
+  },
   "composition": {
-    "scene": [21, 22],
-    "windows": [27, 28],
-    "material_motion": [13, 17, 18]
+    "layout": [3],
+    "material": [10],
+    "conflicts": "3D is confined to selected artwork so collection browsing remains direct"
   },
   "variants": [
     {
-      "id": "dark",
-      "artifact": "concept-dark.png",
-      "feedback": "Want brighter warm contrast"
-    },
-    {
-      "id": "warm",
-      "artifact": "concept-warm.png",
-      "feedback": "Use this design"
+      "id": "editorial-v1",
+      "artifact": "concepts/editorial.png",
+      "status": "proposed",
+      "feedback": null
     }
   ],
-  "acceptance": {
-    "instruction": "Use both as switchable themes",
-    "variants": ["dark", "warm"],
-    "next": "implement"
-  }
+  "acceptance": null,
+  "implementation_authorization": null,
+  "verification": []
 }
 ```
 
-Record exact feedback where possible. Keep negative findings to prevent repeated rejected patterns. A preference is not necessarily a functional requirement. Do not freeze this case's palette, reference count or page structure into a universal rule.
+Record exact feedback, negative findings, artifact versions and unresolved axes. Do not turn optional preferences into functional requirements. For an accepted artifact, fill acceptance with the real user instruction and version; do not use the synthetic demonstration text as a real user's approval.
 
-For each accepted design retain the artifact, visible copy/navigation, components, material/theme roles, workflow, responsive intent and generation method. Record existing implementation authorization so it is not repeatedly requested.
+Handoff requirements, states, tokens and responsive rules are in [handoff-template.md](handoff-template.md). Keep a visual ledger during development, not just a “done” checkbox.

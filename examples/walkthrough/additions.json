@@ -1,8 +1,6 @@
 {
   "schema_version": 1,
   "project_id": "commonplace-demo",
-  "title": "COMMONPLACE · 原创方向对比",
-  "subtitle": "同一主任务，不同结构；选择喜欢的部分，而不是只能整张接受。",
   "round": 2,
   "references": [
     {
