@@ -29,6 +29,13 @@ try {
   await page.waitForFunction(
     () => document.querySelectorAll(".card").length === 2,
   );
+  await page.waitForFunction(() => {
+    const images = [...document.querySelectorAll(".preview-button img")];
+    return (
+      images.length === 2 &&
+      images.every((img) => img.complete && img.naturalWidth > 0)
+    );
+  });
   check(
     "Two original preview images load",
     await page

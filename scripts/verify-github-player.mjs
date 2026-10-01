@@ -17,12 +17,21 @@ try {
     viewport: { width: 1440, height: 1000 },
   });
   await page.goto(repository, {
-    waitUntil: "domcontentloaded",
+    waitUntil: "load",
     timeout: 90000,
   });
   const video = page.locator(".markdown-body video").first();
   await video.waitFor({ state: "visible", timeout: 90000 });
-  await video.scrollIntoViewIfNeeded();
+  // GitHub replaces server-rendered README content during client hydration.
+  for (let attempt = 0; ; attempt++) {
+    try {
+      await video.scrollIntoViewIfNeeded();
+      break;
+    } catch (error) {
+      if (attempt >= 2 || !error.message.includes("not attached")) throw error;
+      await page.waitForTimeout(500);
+    }
+  }
   const result = await video.evaluate(async (v) => {
     if (v.readyState < 1)
       await new Promise((resolve, reject) => {
