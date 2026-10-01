@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-01",
+  "scope": "Original fictional examples and anonymous public GitHub video playback; no independent agent or real-user study",
+  "reports": {
+    "gallery": {
+      "checks": [
+        "Two original preview images load",
+        "Choice retains keyboard focus",
+        "Search narrows references",
+        "Tag filter narrows references",
+        "Comparison displays selected previews",
+        "Escape closes modal",
+        "Zoom opens original preview",
+        "Export preserves stable IDs and reasons",
+        "Refresh restores choices and notes",
+        "Export imports into a fresh browser context",
+        "Malformed import is rejected atomically",
+        "Cross-project import is rejected",
+        "Reassigned reference ID is rejected",
+        "Duplicate choice IDs are rejected",
+        "Imported notes remain literal text",
+        "No horizontal overflow at 820px",
+        "No horizontal overflow at 390px",
+        "Filtered-out choice moves focus to filter",
+        "No browser JavaScript errors"
+      ],
+      "pageErrors": [],
+      "evidence": "Local synthetic gallery, Playwright Chromium; no external business services"
+    },
+    "showcase": {
+      "checks": [
+        "Original WebGL scene renders",
+        "Theme changes",
+        "Film opens in same-page native player",
+        "H264 film plays and seeks to 28 seconds",
+        "Closing player pauses audio/video",
+        "Range delivery supports seeking",
+        "Showcase fits 820px",
+        "Showcase fits 390px",
+        "No showcase JavaScript errors"
+      ],
+      "errors": [],
+      "playback": {
+        "duration": 32,
+        "time": 28,
+        "playing": true,
+        "error": null
+      },
+      "scope": "Original local synthetic showcase, not a connected product"
+    },
+    "round-trip": {
+      "checks": [
+        "Liked original sources remain pinned beside new concepts",
+        "Raw reasons survive import into another round",
+        "Omitted rejected references are reported explicitly",
+        "Rejected choices survive in the preserved decision file",
+        "No round-transition browser errors"
+      ],
+      "evidence": "Synthetic fictional collection example; no independent agent or real users"
+    },
+    "github-player": {
+      "repository": "https://github.com/yanghongliang1010-stack/frontend-style-discovery",
+      "duration": 32,
+      "currentTime": 19.000415,
+      "playing": true,
+      "controls": true,
+      "error": null,
+      "samePage": true,
+      "anonymousAccess": true
+    }
+  }
+}
