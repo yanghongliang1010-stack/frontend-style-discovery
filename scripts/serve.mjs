@@ -27,12 +27,48 @@ export function startServer(port = 8782) {
       if ((await fs.stat(filename)).isDirectory())
         filename = path.join(filename, "index.html");
       const content = await fs.readFile(filename);
+      const headers = {
+        "Content-Type":
+          types[path.extname(filename)] || "application/octet-stream",
+        "Cache-Control": "no-cache",
+        "Accept-Ranges": "bytes",
+      };
+      const range = request.headers.range;
+      if (range) {
+        const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+        const start =
+          match &&
+          (match[1]
+            ? Number(match[1])
+            : Math.max(0, content.length - Number(match[2])));
+        const end =
+          match &&
+          (match[1] && match[2]
+            ? Math.min(content.length - 1, Number(match[2]))
+            : content.length - 1);
+        if (
+          !match ||
+          !Number.isSafeInteger(start) ||
+          !Number.isSafeInteger(end) ||
+          start > end ||
+          start >= content.length
+        ) {
+          response
+            .writeHead(416, { "Content-Range": `bytes */${content.length}` })
+            .end();
+          return;
+        }
+        response
+          .writeHead(206, {
+            ...headers,
+            "Content-Range": `bytes ${start}-${end}/${content.length}`,
+            "Content-Length": end - start + 1,
+          })
+          .end(content.subarray(start, end + 1));
+        return;
+      }
       response
-        .writeHead(200, {
-          "Content-Type":
-            types[path.extname(filename)] || "application/octet-stream",
-          "Cache-Control": "no-cache",
-        })
+        .writeHead(200, { ...headers, "Content-Length": content.length })
         .end(content);
     } catch {
       response
