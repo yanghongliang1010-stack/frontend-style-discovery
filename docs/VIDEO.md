@@ -23,7 +23,7 @@ Set `FFMPEG_PATH` and/or `CHROMIUM_PATH` if the executables are not at their def
 
 To keep software rendering practical, the exporter captures at 8 fps with the WebGL scene and text at the full output resolution. FFmpeg motion interpolation produces the 24 fps output, with scene-change detection for title cuts. The metadata distinguishes captured frames from output frames. This is an original procedural showcase, with no imported footage or models.
 
-The Python audio generator uses only the standard library. It creates a soft stereo tone bed and short selection sounds, without sampled music. No voiceover or third-party audio is used. Inspect the film with sound and review the five saved keyframes before publishing.
+The Python audio generator uses only the standard library. It composes a 96 BPM electronic score with an original melody, warm chord pads, bass, light drums and chapter accents. Loudness normalization targets -17 LUFS with a -1.5 dBTP ceiling. No sampled music is used. No voiceover or third-party audio is used. Inspect the film with sound and review the five saved keyframes before publishing.
 
 ## GitHub page playback
 

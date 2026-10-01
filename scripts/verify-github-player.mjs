@@ -61,13 +61,16 @@ try {
     await waitEvent("seeked", () => {
       v.currentTime = 19;
     });
-    v.muted = true;
+    v.muted = false;
+    v.volume = 1;
     await v.play();
     return {
       duration: v.duration,
       currentTime: v.currentTime,
       playing: !v.paused,
       controls: v.controls,
+      unmuted: !v.muted && v.volume > 0,
+      source: v.currentSrc,
       error: v.error?.code || null,
     };
   });
@@ -75,6 +78,7 @@ try {
     result.duration >= 31.9 &&
       result.playing &&
       result.controls &&
+      result.unmuted &&
       !result.error,
   );
   assert.ok(result.currentTime >= 19);

@@ -4,7 +4,7 @@
 
 [中文说明](README.zh-CN.md) · [Step-by-step workflow](docs/WORKFLOW.zh-CN.md) · [Independent example](docs/CASE_STUDY.zh-CN.md)
 
-https://github.com/user-attachments/assets/c3c84a07-ba15-4bec-a6af-64b6108e10b3
+https://github.com/user-attachments/assets/87a62913-2d31-4ee5-892f-ec3f67033525
 
 ![COMMONPLACE — original fictional inspiration-library concept](examples/media/commonplace-editorial.png)
 

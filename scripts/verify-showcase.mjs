@@ -76,10 +76,25 @@ try {
     await waitEvent("seeked", () => {
       video.currentTime = 28;
     });
-    video.muted = true;
+    video.muted = false;
+    video.volume = 1;
+    const context = new AudioContext();
+    const source = context.createMediaElementSource(video);
+    const analyser = context.createAnalyser();
+    source.connect(analyser);
+    analyser.connect(context.destination);
+    await context.resume();
     await video.play();
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    const samples = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(samples);
+    const rms = Math.sqrt(
+      samples.reduce((sum, n) => sum + n * n, 0) / samples.length,
+    );
     return {
       duration,
+      rms,
+      audible: !video.muted && context.state === "running",
       time: video.currentTime,
       playing: !video.paused,
       error: video.error,
@@ -91,6 +106,10 @@ try {
       playback.time >= 28 &&
       playback.playing &&
       !playback.error,
+  );
+  check(
+    "Original music decodes and plays unmuted",
+    playback.audible && playback.rms > 0.001,
   );
   await page.keyboard.press("Escape");
   check(

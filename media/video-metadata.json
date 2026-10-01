@@ -8,7 +8,7 @@
   "capturedFrames": 256,
   "scenePixelRatio": 1,
   "interpolation": "FFmpeg minterpolate motion compensation to 24 fps",
-  "audio": "original stereo ambient score",
+  "audio": "original 96 BPM stereo electronic score: melody, chords, bass and light drums; loudnorm target -17 LUFS",
   "graphics": "original procedural WebGL ribbon and glass sculpture",
   "rendering": "deterministic Playwright Chromium / SwiftShader",
   "pageErrors": [],
