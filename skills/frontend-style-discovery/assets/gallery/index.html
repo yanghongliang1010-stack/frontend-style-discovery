@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>参考选图册</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="gallery.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1 id="title">参考选图册</h1>
+        <p id="subtitle"></p>
+      </div>
+      <span id="round"></span>
+    </header>
+    <main>
+      <div class="tools">
+        <label class="search"
+          >搜索参考<input
+            id="search"
+            type="search"
+            placeholder="名称、作者、标签" /></label
+        ><label
+          >筛选方向<select id="tag">
+            <option value="">全部方向</option>
+          </select></label
+        ><label class="check"
+          ><input id="liked-only" type="checkbox" />只看喜欢</label
+        ><button id="compare">对比喜欢的预览</button
+        ><button id="export">导出选择</button
+        ><label class="import"
+          >导入选择<input
+            id="import"
+            type="file"
+            accept="application/json,.json"
+        /></label>
+      </div>
+      <p id="summary" role="status"></p>
+      <div id="gallery" class="gallery"></div>
+      <p id="empty" hidden>没有匹配的参考，试试其他筛选条件。</p>
+      <footer>
+        选择与备注只保存在此浏览器。换浏览器或下一轮可导出、导入；原作链接在新标签中打开。
+      </footer>
+    </main>
+    <dialog id="preview">
+      <div class="dialog-head">
+        <strong id="preview-title"></strong
+        ><button id="close-preview">关闭</button>
+      </div>
+      <div id="preview-body"></div>
+    </dialog>
+    <div id="toast" role="status" hidden></div>
+    <script type="module" src="gallery.js"></script>
+  </body>
+</html>

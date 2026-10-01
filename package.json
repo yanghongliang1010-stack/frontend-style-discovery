@@ -1,0 +1,22 @@
+{
+  "name": "frontend-style-discovery",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reference-first visual discovery skill, selection gallery and original 3D showcase",
+  "scripts": {
+    "demo": "node scripts/serve.mjs",
+    "gallery": "python3 skills/frontend-style-discovery/scripts/build_gallery.py examples/demo.json --output demo/gallery",
+    "video": "node scripts/render-video.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1",
+    "prettier": "^3.6.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "width": 1280,
+  "height": 720,
+  "fps": 24,
+  "duration": 32,
+  "frames": 768,
+  "captureFps": 8,
+  "capturedFrames": 256,
+  "scenePixelRatio": 0.5,
+  "interpolation": "FFmpeg minterpolate motion compensation to 24 fps",
+  "audio": "original stereo ambient score",
+  "graphics": "original procedural WebGL pavilion",
+  "rendering": "deterministic Playwright Chromium / SwiftShader",
+  "pageErrors": [],
+  "verification": {
+    "decodedDuration": 32.0,
+    "codec": "H.264/AAC",
+    "audioChannels": 2,
+    "audioSampleRate": 44100,
+    "audioPeakDb": -18.1,
+    "keyframesReviewed": [
+      3,
+      7,
+      13,
+      19,
+      28
+    ]
+  }
+}

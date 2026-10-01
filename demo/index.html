@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Frontend Style Discovery</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="showcase.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/node_modules/three/build/three.module.js",
+          "three/addons/": "/node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body data-theme="dark">
+    <div class="scene-frame"><div id="scene"></div></div>
+    <header>
+      <a href="./">Frontend<br />Style Discovery</a>
+      <div class="controls">
+        <button id="theme">切换为日光</button><a href="gallery/">打开选图册</a
+        ><a href="../media/frontend-style-discovery.mp4">播放宣传片</a>
+      </div>
+    </header>
+    <main>
+      <div id="copy">
+        <h1>先选风格。<br />再写界面。</h1>
+        <p id="description">
+          通过真实案例、多轮反馈与风格组合，<br />把模糊的想法变成完整的前端设计。
+        </p>
+        <a class="main-link" href="gallery/">开始选择参考</a>
+      </div>
+    </main>
+    <div id="sources" hidden>
+      <p>参考原作</p>
+      <div>13 <strong>KODE Immersive</strong></div>
+      <div>17 <strong>Lusion</strong></div>
+      <div>18 <strong>Igloo</strong></div>
+      <small>本片场景、镜头和声音为原创制作</small>
+    </div>
+    <div id="axes" hidden>
+      <span>3D 场景与材质</span><span>空间布局与浮窗</span
+      ><span>明亮暖色碰撞</span>
+    </div>
+    <div id="concepts" hidden>
+      <figure>
+        <img src="../examples/media/concept-dark.png" alt="原创暮色概念" />
+        <figcaption>保留空间与材质</figcaption>
+      </figure>
+      <figure>
+        <img src="../examples/media/concept-warm.png" alt="原创日光概念" />
+        <figcaption>根据反馈，改成明亮暖色</figcaption>
+      </figure>
+    </div>
+    <footer>
+      <span id="footer-copy">$frontend-style-discovery</span
+      ><a
+        href="https://github.com/yanghongliang1010-stack/frontend-style-discovery"
+        >GitHub / frontend-style-discovery</a
+      >
+    </footer>
+    <script type="module" src="showcase.js"></script>
+  </body>
+</html>

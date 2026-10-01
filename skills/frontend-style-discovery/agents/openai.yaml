@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Style Discovery"
+  short_description: "Choose references, combine styles, build a verified frontend"
+  default_prompt: "Use $frontend-style-discovery to help me choose a visual direction and build my frontend through reference galleries and iterative design."

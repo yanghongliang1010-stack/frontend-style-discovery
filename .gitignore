@@ -1,0 +1,9 @@
+node_modules/
+out/
+demo/gallery/
+__pycache__/
+*.pyc
+.DS_Store
+.env*
+render-frames/
+*.log

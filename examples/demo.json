@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "project_id": "spatial-workspace-demo",
+  "title": "选图式前端设计 · 原创示例",
+  "subtitle": "同一空间，两套主题。选择你喜欢的材质、颜色与布局，并记录理由。",
+  "round": 3,
+  "references": [
+    {
+      "id": 29,
+      "title": "暮色知识展亭",
+      "creator": "Frontend Style Discovery",
+      "kind": "AI-generated original concept",
+      "source_url": "https://github.com/yanghongliang1010-stack/frontend-style-discovery",
+      "image": "media/concept-dark.png",
+      "tags": ["3D 场景", "玻璃浮窗", "深色", "铜与玉色"],
+      "note": "暖石墨环境、铜环与玉色玻璃核心；用于选择空间布局与材质。",
+      "verification": "完整原创概念图；不是已实现的应用",
+      "license": "original demo asset · MIT",
+      "pinned": false
+    },
+    {
+      "id": 30,
+      "title": "日光知识展亭",
+      "creator": "Frontend Style Discovery",
+      "kind": "AI-generated original concept",
+      "source_url": "https://github.com/yanghongliang1010-stack/frontend-style-discovery",
+      "image": "media/concept-warm.png",
+      "tags": ["3D 场景", "玻璃浮窗", "明亮暖色", "强色彩碰撞"],
+      "note": "保留空间结构，换成珊瑚橙、莓粉、奶油黄与蓝色玻璃。",
+      "verification": "完整原创概念图；不是已实现的应用",
+      "license": "original demo asset · MIT",
+      "pinned": false
+    }
+  ]
+}
